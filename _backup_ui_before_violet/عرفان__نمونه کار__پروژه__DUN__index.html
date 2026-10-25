@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-palette="dun">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DUN — رُستری و کافهٔ شبانه</title>
+<meta name="description" content="دُن؛ رُستری قهوهٔ تخصصی و کافهٔ شبانه. دانه‌های تک‌خاستگاه، اشتراک ماهانه و کلوپ عاشقان قهوه.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#ff9a4d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff9a4d'/%3E%3Cstop offset='1' stop-color='%23ffd88a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cellipse cx='32' cy='32' rx='13' ry='19' transform='rotate(24 32 32)' fill='none' stroke='%2305060b' stroke-width='5'/%3E%3Cpath d='M27 17c7 9 7 21 3 30' stroke='%2305060b' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/views.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<!-- atmosphere -->
+<div id="aurora"></div>
+<div id="grid-layer"></div>
+<canvas id="bg-fx" aria-hidden="true"></canvas>
+<div id="spotlight" aria-hidden="true"></div>
+<div id="scan" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<div id="cur-dot" aria-hidden="true"></div>
+
+<!-- preloader -->
+<div id="preloader">
+  <div class="pre-in">
+    <div class="pre-mark">
+      <div class="pre-ring"></div>
+      <svg class="pre-svg" viewBox="0 0 64 64"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9a4d"/><stop offset=".5" stop-color="#ffd88a"/><stop offset="1" stop-color="#ff4d6d"/></linearGradient></defs><path class="pre-path" d="M20 48V16h9a15 15 0 0 1 0 32h-9"/></svg>
+    </div>
+    <div class="pre-wordmark"></div>
+    <div class="pre-bar"><i></i></div>
+    <div class="pre-pct mono">BREWING SYSTEMS · 0%</div>
+    <button class="pre-skip">رد کردن انیمیشن ↵</button>
+  </div>
+</div>
+
+<div id="app">
+
+<header class="topbar">
+  <a class="brand" href="#home" data-view="home" aria-label="DUN — خانه">
+    <span class="brand-mark"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="5.5" ry="8" transform="rotate(24 12 12)"/><path d="M9.5 5.5c3 4 3 9 1 13"/></svg></span>
+    <span>DUN<small>ROASTERY × CAFÉ × CLUB</small></span>
+  </a>
+  <nav class="nav-links" aria-label="ناوبری اصلی">
+    <button data-view="home">خانه</button>
+    <button data-view="features">مسیر دانه</button>
+    <button data-view="works">دانه‌ها</button>
+    <button data-view="pricing">اشتراک</button>
+    <button data-view="about">درباره ما</button>
+    <button data-view="contact">تماس</button>
+  </nav>
+  <div class="nav-tail">
+    <button class="cmdk" data-cmd aria-label="جستجوی فرمان"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>جستجو <span class="kbd">Ctrl K</span></button>
+    <span id="nav-user" style="display:flex;gap:10px;align-items:center"></span>
+    <button class="burger" aria-label="منو"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div id="mmenu" aria-hidden="true">
+  <button data-view="home">خانه</button>
+  <button data-view="features">مسیر دانه</button>
+  <button data-view="works">دانه‌ها</button>
+  <button data-view="pricing">اشتراک</button>
+  <button data-view="about">درباره ما</button>
+  <button data-view="contact">تماس</button>
+  <button data-view="login">ورود / عضویت کلوپ</button>
+</div>
+
+<main>
+
+<!-- ================= 1 · HOME ================= -->
+<section class="view" id="view-home">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span>DUN ROASTERY · EST 1399</span>
+      <h1>
+        <span class="line"><span>هر دونه،</span></span>
+        <span class="line"><span class="grad grad-move">یه شب بیدار</span></span>
+        <span class="line"><span>داره <em class="stroke-word" style="font-style:normal">✦</em></span></span>
+      </h1>
+      <p class="hero-sub">دُن یک رُستری و کافهٔ شبانه است: دانه‌ها را مستقیم از مزرعه می‌خریم، همان هفته در شهر خودمان رُست می‌کنیم و تا ۴۸ ساعت بعد، تازه‌ترین فنجان عمرت را به دستت می‌رسانیم.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" data-view="works">دیدن دانه‌ها
+          <svg viewBox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button>
+        <button class="btn btn-ghost btn-lg" data-view="pricing">ساخت اشتراک</button>
+      </div>
+      <div class="hero-meta">
+        <span><i class="live"></i> <b>کافه باز است</b> — امشب ۳ میز خالی</span>
+        <span>ارسال <b>۴۸ ساعته</b></span>
+        <span>رضایت <b>۹۷٪</b> مشترک‌ها</span>
+      </div>
+    </div>
+    <div class="hero-art tilt">
+      <div class="ring"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+      <div class="ring-rot"><span class="sat"></span></div>
+      <div class="ring-rot b"><span class="sat"></span></div>
+      <div class="ring-rot c"><span class="sat"></span></div>
+      <div class="orb-core"><span>دُن</span></div>
+      <div class="hud h1">رُست <b>۲۱۴°</b></div>
+      <div class="hud h2">دم تازگی <b>۹۳ ثانیه</b></div>
+      <div class="hud h3">V60 BREW <b>4:00</b></div>
+    </div>
+  </div>
+
+  <div class="marquee"><div class="mq-track" id="mq-track"></div></div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">WHY DUN</span>
+        <h2>قهوه‌ای که <span class="grad">تازگیش بو می‌دهد</span></h2>
+      </div>
+      <p>هر تصمیم — از انتخاب مزرعه تا منحنی رُست — با دلیل گرفته می‌شود و با کوپینگ سنجیده می‌شود.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="card feat reveal">
+        <h3 style="font-size:clamp(22px,3vw,30px)">رُستی که <span class="grad">وسواس دارد</span></h3>
+        <p>منحنی رُست هر دسته، بعد از ده‌ها کوپینگ آزمایشی قفل می‌شود. تاریخ رُست روی بسته، دروغ نیست.</p>
+        <div class="bento-visual"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="card feat reveal">
+        <span class="fic"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5 9-12h-6l1-8z"/></svg></span>
+        <h3>۴۸ ساعت تا فنجان</h3>
+        <p>از درام رُست تا درِ خانه‌ات؛ هیچ دانه‌ای در انبار پیر نمی‌شود.</p>
+        <div class="tag">FRESHNESS GUARANTEED</div>
+      </div>
+      <div class="card feat reveal">
+        <span class="fic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></span>
+        <h3>خرید مستقیم</h3>
+        <p>بدون دلال، با قیمت منصفانه به کشاورز؛ نام مزرعه روی هر بسته.</p>
+        <div class="tag">DIRECT TRADE · 14 FARMS</div>
+      </div>
+      <div class="card feat reveal" style="grid-column:span 2">
+        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+          <span class="fic" style="margin:0"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l2.8 2.8m8.4 8.4L19 19M19 5l-2.8 2.8M7.8 16.2 5 19"/></svg></span>
+          <div style="flex:1;min-width:220px">
+            <h3>کلوپ دُن، باشگاه اعضای شب‌بیدار</h3>
+            <p>اشتراک ماهانه، امتیاز خرید، رزرو زودهنگام میکروت‌لات‌ها و کوپینگ‌های عمومی ماهانه — همه در پنل عضویت تو.</p>
+          </div>
+          <div class="mini-code" dir="ltr"><span class="c">// every bag, every time</span><br><span class="k">await</span> dun.<span class="k">roast</span>(<span class="s">'fresh'</span>) <span class="c">// ✓ 48h to door</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats" id="home-stats">
+    <div class="stat reveal"><b class="grad">۱۴</b><small>PARTNER FARMS</small></div>
+    <div class="stat reveal"><b>۹۷٪</b><small>RENEWAL RATE</small></div>
+    <div class="stat reveal"><b class="grad-move grad">۳۲</b><small>ROAST PROFILES</small></div>
+    <div class="stat reveal"><b>۱۲۰K</b><small>CUPS / YEAR</small></div>
+  </div>
+
+  <div class="section" style="text-align:center">
+    <h2 style="font-size:clamp(30px,6vw,64px);line-height:1.15">هنوز دمت سرد نشده؟<br><span class="grad grad-move">اولین فنجان مهمان ما.</span></h2>
+    <p style="color:var(--ink2);max-width:44ch;margin:18px auto 34px">برای عضوهای جدید کلوپ، اولین بسته با کد DUNFIRST رایگان ارسال می‌شود.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary btn-lg" data-view="register">عضویت در کلوپ ✦</button>
+      <button class="btn btn-ghost btn-lg" data-view="about">اول ما را بشناس</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2 · FEATURES (مسیر دانه) ================= -->
+<section class="view" id="view-features">
+  <div class="sec-head">
+    <div><span class="eyebrow">BEAN JOURNEY</span><h2>از گیله تا فنجان، <span class="grad">شش ایستگاه</span></h2></div>
+    <p>مسیری که یک دانهٔ سبز در دُن طی می‌کند تا به عطرِ فنجان تو برسد.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="card feat reveal">
+      <span class="fic"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+      <h3>خرید و انتخاب مزرعه</h3>
+      <p>هر فصل، نمونه‌ها را کوپینگ می‌کنیم؛ فقط ۸۶ امتیاز به بالا وارد سبد می‌شود — با نام مزرعه و قیمت شفاف.</p>
+      <div class="tag">SOURCING · 86+ CUP SCORE</div>
+    </div>
+    <div class="card feat reveal">
+      <span class="fic"><svg viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
+      <h3>رُست هفتگی</h3>
+      <p>درام ۱۵ کیلویی، منحنی ثبت‌شده، سه درجه: لایت فیلتر، مدیوم همه‌کاره، دارک اسپرسو.</p>
+      <div class="tag">15KG DRUM · EVERY TUESDAY</div>
+    </div>
+    <div class="card feat reveal">
+      <span class="fic"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5 9-12h-6l1-8z"/></svg></span>
+      <h3>استراحت و گازگیری</h3>
+      <p>دانه‌ها ۵ تا ۹ روز می‌خوابند تا گاز CO₂ برود و طعم بنشیند؛ تاریخ استراحت روی بسته درج می‌شود.</p>
+      <div class="tag">RESTED 5–9 DAYS</div>
+    </div>
+    <div class="card feat reveal">
+      <span class="fic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-6 3 3 5-8"/></svg></span>
+      <h3>باریستا و دم‌آوری</h3>
+      <p>اسپرسوبار کافه، recipes دقیق برای V60، ایروپرس و موکاپات — با پشتیبانی چت کلوپ.</p>
+      <div class="tag">RECIPES · SUPPORT CHAT</div>
+    </div>
+    <div class="card feat reveal">
+      <span class="fic"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg></span>
+      <h3>کارگاه‌های حضوری</h3>
+      <p>کوپینگ عمومی، لاته‌آرت و دم‌آوری دستی — هر ماه، دور میز بلند کافه.</p>
+      <div class="tag">CUPPING · LATTE ART</div>
+    </div>
+    <div class="card feat reveal">
+      <span class="fic"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4c0 1.5-.8 2.8-2 3.5V11h3a4 4 0 1 1 0 8h-1M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.5V11H7a4 4 0 1 0 0 8h1"/></svg></span>
+      <h3>میکروت‌لات‌ها</h3>
+      <p>بچ‌های کوچک و کمیاب؛ اول اعضای کلوپ می‌چشند، بعد اگر ماند برای بقیه.</p>
+      <div class="tag">MICRO LOT · MEMBERS FIRST</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div><span class="eyebrow">PROCESS</span><h2>هفته‌ای که دانه <span class="grad">متولد می‌شود</span></h2></div></div>
+    <div class="card reveal" style="padding:36px">
+      <div class="timeline">
+        <div class="tl"><span>شنبه</span><b>کوپینگ نمونهٔ هفته</b><p>پنل ۵ قهوهٔ تست؛ تصمیم با امتیاز و بحث تیم، نه سلیقهٔ یک نفر.</p></div>
+        <div class="tl"><span>یکشنبه</span><b>برنامهٔ رُست</b><p>وزن سبدها، پروفایل‌ها و حجم سفارش‌های اشتراک قفل می‌شود.</p></div>
+        <div class="tl"><span>دوشنبه</span><b>تست رُست نمونه</b><p>هر پروفایل تازه اول ۵۰۰ گرمی تست می‌شود، بعد اصلاح.</p></div>
+        <div class="tl"><span>سه‌شنبه</span><b>رُست تولید</b><p>درام روشن می‌شود؛ دما و زمان ثانیه‌به‌ثانیه لاگ می‌شود.</p></div>
+        <div class="tl"><span>چهارشنبه</span><b>بسته‌بندی و استراحت</b><p>والو یک‌طرفه، تاریخ رُست، و ورود به قفسهٔ استراحت.</p></div>
+        <div class="tl"><span>پنج‌شنبه</span><b>ارسال و کافه</b><p>بسته‌ها به راه می‌افتند؛ کافه تا نیمه‌شب بوی تازگی می‌دهد.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat reveal"><b data-count="214" data-suffix="°">0</b><small>ROAST TEMP</small></div>
+    <div class="stat reveal"><b data-count="48" data-suffix="h">0</b><small>TO YOUR DOOR</small></div>
+    <div class="stat reveal"><b data-count="86" data-suffix="+">0</b><small>CUP SCORE MIN</small></div>
+    <div class="stat reveal"><b data-count="9" data-suffix=" روز">0</b><small>BEAN REST</small></div>
+  </div>
+</section>
+
+<!-- ================= 3 · WORKS (دانه‌ها) ================= -->
+<section class="view" id="view-works">
+  <div class="sec-head">
+    <div><span class="eyebrow">THE BEANS</span><h2>دانه‌هایی که <span class="grad">عطرشان می‌ماند</span></h2></div>
+    <div class="filters" id="work-filters"></div>
+  </div>
+  <div class="works-grid" id="works-grid"></div>
+  <p class="reveal" style="margin-top:34px;color:var(--ink3);font-size:13.5px;text-align:center">روی هر دانه بزن تا شناسنامهٔ کاملش را ببینی ✦</p>
+</section>
+
+<!-- ================= 4 · PRICING (اشتراک) ================= -->
+<section class="view" id="view-pricing">
+  <div class="sec-head" style="flex-direction:column;align-items:center;text-align:center">
+    <span class="eyebrow">SUBSCRIPTION</span>
+    <h2>قهوه‌ات، <span class="grad">منظم مثل ساعت</span></h2>
+    <p style="margin:12px 0 26px">هر ماه، تازه‌رُست‌شده جلوی در. لغو و تغییر هر وقت خواستی، بدون جریمه.</p>
+    <div class="toggle" id="pricing-toggle">
+      <button data-cycle="m" class="on">ماهانه</button>
+      <button data-cycle="y">فصلی</button>
+      <span class="save">−۲۰٪</span>
+    </div>
+  </div>
+  <div class="price-grid" id="price-grid"></div>
+  <div class="faq reveal" id="faq">
+    <div class="qa"><button>قیمت‌ها به تومان است؟<i>+</i></button><div class="ans"><p>بله، همهٔ قیمت‌ها تومان و شامل بسته‌بندی است؛ ارسال برای اشتراک‌های فصلی رایگان، برای ماهانه بالای ۱٫۵ میلیون رایگان است.</p></div></div>
+    <div class="qa"><button>آسیاب یا دانه؟<i>+</i></button><div class="ans"><p>در پنل کلوپ انتخاب می‌کنی: دانهٔ کامل، اسپرسو، فیلتر (V60/کمیکس)، فرنچ‌پرس یا ایروپرس. هر زمان قابل تغییر است.</p></div></div>
+    <div class="qa"><button>اگر قهوه‌ام تمام شود زودتر بفرستید؟<i>+</i></button><div class="ans"><p>از پنل «ارسال زودتر» می‌زنی؛ اگر در دورهٔ همان ماه باشیم، بدون هزینه اضافه جابه‌جا می‌شود.</p></div></div>
+    <div class="qa"><button>کافه و کارگاه برای اعضای کلوپ دارد؟<i>+</i></button><div class="ans"><p>بله؛ کوپینگ ماهانه رایگان، تخفیف ۱۵ تا ۳۰ درصدی کارگاه‌ها و رزرو زودهنگام میکروت‌لات‌ها بسته به پلن فعال می‌شود.</p></div></div>
+  </div>
+</section>
+
+<!-- ================= 5 · ABOUT ================= -->
+<section class="view" id="view-about">
+  <div class="about-top">
+    <div>
+      <span class="eyebrow">OUR STORY</span>
+      <h2>همه‌چیز از یک <span class="grad">ماهیتابهٔ مسی</span> شروع شد</h2>
+      <p>دُن در زمستان ۱۳۹۹ با یک درام دستیِ سه‌کیلویی در پارکینگ خانه شروع شد: خسته از قهوه‌هایی که تاریخ رُستشان رویش نبود. امروز در انباری قدیمی در جنوب شهر رُست می‌کنیم، کوپینگ می‌گذاریم و شب‌ها کافه‌مان تا نیمه‌شب روشن است.</p>
+      <p style="margin-top:14px">تیم ما چهار رُستر و باریستاست که هر هفته چشم‌بند می‌زنند و کور می‌چشند؛ چون باور داریم زبانِ قهوه، بو و طعم است نه برند و بسته‌بندی.</p>
+      <div class="stack">
+        <span class="chip"><i></i>V60</span><span class="chip"><i></i>AeroPress</span><span class="chip"><i></i>Chemex</span>
+        <span class="chip"><i></i>French Press</span><span class="chip"><i></i>Moka Pot</span><span class="chip"><i></i>Siphon</span>
+        <span class="chip"><i></i>Espresso Bar</span><span class="chip"><i></i>Nitro Tap</span>
+      </div>
+    </div>
+    <div class="quote reveal">
+      <p>قهوهٔ بد، دقیقه‌ها را خراب می‌کند؛ قهوهٔ خوب، ساعت‌ها را زنده نگه می‌دارد.</p>
+      <footer>— بیانیهٔ رُستری دُن، ۱۴۰۱</footer>
+    </div>
+  </div>
+
+  <div class="values">
+    <div class="value reveal"><span>01</span><h4>تازگی، بی‌رحمانه</h4><p>هر چه قدیمی‌تر از ۴۰ روز از رُست، از قفسه بیرون — حتی اگر پرفروش باشد.</p></div>
+    <div class="value reveal"><span>02</span><h4>قیمتِ منصفانه</h4><p>سهم کشاورز شفاف؛ روی هر بسته نوشته شده چند درصد پول به مزرعه رسیده.</p></div>
+    <div class="value reveal"><span>03</span><h4>طعم بر مد</h4><p>پروفایل‌ها با کوپینگ کور قفل می‌شوند، نه با ترندهای اینستاگرام.</p></div>
+    <div class="value reveal"><span>04</span><h4>شب‌های بیدار</h4><p>کافه تا نیمه‌شب باز است؛ چون ایده‌ها معمولاً ساعت ۱۱ شب می‌آیند.</p></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div><span class="eyebrow">THE HUMANS</span><h2>پشت <span class="grad">درامِ رُست</span></h2></div></div>
+    <div class="team">
+      <div class="member reveal"><div class="av" style="background:linear-gradient(140deg,var(--a1),var(--a2))">BD</div><h4>بهرام دادمان</h4><small>HEAD ROASTER</small><p>پانزده سال، چهار قاره، یک وسواس: منحنی رُست بی‌نقص.</p></div>
+      <div class="member reveal"><div class="av" style="background:linear-gradient(140deg,var(--a2),var(--a3))">SM</div><h4>سارا موحد</h4><small>LEAD BARISTA</small><p>دو قهرمانی لاته‌آرت؛ دستش روی پرتافیلتر می‌لرزد فقط از شدت دقت.</p></div>
+      <div class="member reveal"><div class="av" style="background:linear-gradient(140deg,var(--a3),var(--a1))">KR</div><h4>کیوان راد</h4><small>SOURCING</small><p>فصل‌ها را در مزارعهٔ اتیوپی و کلمبیا می‌گذراند؛ با هر کشاورز دست می‌دهد.</p></div>
+      <div class="member reveal"><div class="av" style="background:linear-gradient(140deg,var(--a1),var(--a3))">NA</div><h4>نسترن آذر</h4><small>CAFE &amp; EDUCATION</small><p>مدرس کارگاه‌ها و مسئول دسرهای نیمه‌شب؛ کافه بدون او فقط یک رُستری است.</p></div>
+    </div>
+  </div>
+
+  <div class="section" style="text-align:center">
+    <h2 style="font-size:clamp(24px,4vw,40px)">می‌خواید اول بو کنید، بعد عضو شوید؟</h2>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px">
+      <button class="btn btn-primary" data-view="contact">رزرو میز امشب</button>
+      <button class="btn btn-ghost" data-view="works">اول دانه‌ها را ببینید</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6 · CONTACT ================= -->
+<section class="view" id="view-contact">
+  <div class="sec-head" style="flex-direction:column;align-items:center;text-align:center">
+    <span class="eyebrow">PULL UP A CHAIR</span>
+    <h2>بیا <span class="grad">روبروی درام بنشین</span></h2>
+    <p style="margin-top:12px">فرم را پر کن؛ قبل از نیمه‌شب جواب می‌دهیم. عجله داری؟ زنگ بزن، صدای خِرخرِ آسیاب را می‌شنوی.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="form-card reveal" id="contact-body">
+      <form id="contact-form" novalidate>
+        <div class="field-row">
+          <div class="field"><input id="c-name" placeholder=" " autocomplete="name"><label for="c-name">نام و نام خانوادگی</label><div class="err"></div></div>
+          <div class="field"><input id="c-email" type="email" placeholder=" " autocomplete="email" dir="ltr"><label for="c-email">ایمیل</label><div class="err"></div></div>
+        </div>
+        <div class="field filled"><select id="c-type">
+          <option value="">موضوع را انتخاب کنید…</option>
+          <option>رزرو میز کافه</option><option>ثبت‌نام کارگاه</option><option>سفارش عمده / کافه و دفتر</option>
+          <option>پرسش دربارهٔ اشتراک</option><option>همکاری و تأمین دانه</option><option>سایر</option>
+        </select><label for="c-type">موضوع</label><div class="err"></div></div>
+        <div class="field"><textarea id="c-msg" placeholder=" " rows="4"></textarea><label for="c-msg">بنویس چه می‌خواهی؛ ساعت، تعداد نفر، طعم موردعلاقه…</label><div class="err"></div></div>
+        <div id="c-track" style="margin-bottom:16px"></div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">رزرو کن ☕</button>
+      </form>
+    </div>
+    <div>
+      <div class="info-list">
+        <div class="info reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div><b>کافه و رُستری</b><span>تهران، خیابان بهشت، کوچهٔ موبری، پلاک ۱۲</span></div></div>
+        <div class="info reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg></span><div><b>زنگ بزن</b><span dir="ltr">+98 21 66 55 44 33</span></div></div>
+        <div class="info reveal"><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg></span><div><b>ایمیل</b><span>hello@dun.cafe</span></div></div>
+        <div class="info reveal"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>ساعات</b><span>هر روز · ۸ صبح تا ۲۴ — جمعه‌ها تا ۱ بامداد</span></div></div>
+      </div>
+      <div class="socials">
+        <button class="social reveal" data-social="اینستاگرام">اینستاگرام <span>@dun.roastery ↗</span></button>
+        <button class="social reveal" data-social="تلگرام">تلگرام <span>@duncafe ↗</span></button>
+        <button class="social reveal" data-social="واتساپ">واتساپ <span>پشتیبانی کلوپ ↗</span></button>
+        <button class="social reveal" data-social="کافه‌بوک">کافه‌بوک <span>منوی شب ↗</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7 · LOGIN ================= -->
+<section class="view" id="view-login">
+  <div class="auth-shell">
+    <div class="auth-side">
+      <div class="auth-orb o1"></div><div class="auth-orb o2"></div>
+      <div>
+        <span class="eyebrow" style="color:#fff">DUN CLUB</span>
+        <h3 id="auth-side-h">خوش برگشتی، شب‌بیدار ✦</h3>
+      </div>
+      <ul>
+        <li><b>✓</b> پیگیری بسته‌ها و تاریخ رُست هر ارسال</li>
+        <li><b>✓</b> رزرو زودهنگام میکروت‌لات‌ها و کوپینگ ماه</li>
+        <li><b>✓</b> امتیاز خرید، تخفیف کارگاه و منوی شب</li>
+      </ul>
+      <div class="mono" style="font-size:10px;letter-spacing:.18em;position:relative;z-index:1;opacity:.8">SECURE · AES-256 · DEMO BUILD</div>
+    </div>
+    <div class="auth-panel">
+      <div class="tabs">
+        <button data-view="login" class="on">ورود</button>
+        <button data-view="register">عضویت کلوپ</button>
+      </div>
+      <form class="auth-form on" id="login-form" novalidate>
+        <h3>ورود به کلوپ</h3>
+        <p>با همان ایمیلی که عضو شدی وارد شو.</p>
+        <div class="field"><input id="l-email" type="email" placeholder=" " autocomplete="email" dir="ltr"><label for="l-email">ایمیل</label><div class="err"></div></div>
+        <div class="field pw-wrap"><input id="l-pass" type="password" placeholder=" " autocomplete="current-password" dir="ltr"><label for="l-pass">رمز عبور</label>
+          <button type="button" class="pw-eye" data-eye="l-pass" aria-label="نمایش رمز">👁</button><div class="err"></div></div>
+        <a class="forgot" href="#" data-forget="ایمیلت">رمزت را گم کرده‌ای؟</a>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">ورود ✦</button>
+        <div class="auth-alt">OR WAKE UP WITH</div>
+        <div class="oauth">
+          <button type="button" data-oauth="گوگل"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23 12.3c0-.9-.1-1.5-.2-2.2H12v4.3h6.3c-.1 1-.8 2.5-2.4 3.5l3.7 2.9c2.3-2.1 3.4-5.1 3.4-8.5Z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.7-2.9c-1 .7-2.4 1.2-4.2 1.2a7.3 7.3 0 0 1-6.9-5L1.3 14.5A12 12 0 0 0 12 24Z"/><path fill="#FBBC05" d="M5.1 14.4a7.4 7.4 0 0 1 0-4.7L1.3 6.7a12.2 12.2 0 0 0 0 10.8l3.8-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3 .8 3.7 1.4L19 3C17 1.1 14.5 0 12 0 7.3 0 3.3 2.7 1.3 6.7l3.8 3A7.3 7.3 0 0 1 12 4.8Z"/></svg>گوگل</button>
+          <button type="button" data-oauth="اپل"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.9zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25Z"/></svg>اپل</button>
+        </div>
+        <p class="auth-foot">عضو کلوپ نیستی؟ <button type="button" data-view="register">همین حالا عضو شو</button> — فنجان اول رایگان.</p>
+        <p class="auth-foot mono" style="margin-top:6px">demo account · admin@dun.cafe / dun1234</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8 · REGISTER ================= -->
+<section class="view" id="view-register">
+  <div class="auth-shell">
+    <div class="auth-side">
+      <div class="auth-orb o1"></div><div class="auth-orb o2"></div>
+      <div>
+        <span class="eyebrow" style="color:#fff">JOIN THE CLUB</span>
+        <h3>بیایید شب‌ها را بیدار نگه داریم ✦</h3>
+      </div>
+      <ul>
+        <li><b>۱</b> عضو شو و طعم موردعلاقه‌ات را انتخاب کن</li>
+        <li><b>۲</b> اولین بسته با کد DUNFIRST رایگان می‌رسد</li>
+        <li><b>۳</b> هر سه‌شنبه، تازه‌رُست جلوی درت</li>
+      </ul>
+      <div class="mono" style="font-size:10px;letter-spacing:.18em;position:relative;z-index:1;opacity:.8">NO SPAM · NO LOCK-IN · CANCEL ANYTIME</div>
+    </div>
+    <div class="auth-panel">
+      <div class="tabs">
+        <button data-view="login">ورود</button>
+        <button data-view="register" class="on">عضویت کلوپ</button>
+      </div>
+      <form class="auth-form on" id="register-form" novalidate>
+        <h3>عضویت در کلوپ دُن</h3>
+        <p>رایگان است؛ فقط هزینهٔ قهوه‌ات را پرداخت می‌کنی.</p>
+        <div class="field"><input id="r-name" placeholder=" " autocomplete="name"><label for="r-name">نام و نام خانوادگی</label><div class="err"></div></div>
+        <div class="field"><input id="r-email" type="email" placeholder=" " autocomplete="email" dir="ltr"><label for="r-email">ایمیل</label><div class="err"></div></div>
+        <div class="field pw-wrap"><input id="r-pass" type="password" placeholder=" " autocomplete="new-password" dir="ltr"><label for="r-pass">رمز عبور</label>
+          <button type="button" class="pw-eye" data-eye="r-pass" aria-label="نمایش رمز">👁</button><div class="err"></div></div>
+        <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="meter-txt" id="meter-txt">قدرت رمز: خیلی ضعیف</div>
+        <div class="field pw-wrap"><input id="r-pass2" type="password" placeholder=" " autocomplete="new-password" dir="ltr"><label for="r-pass2">تکرار رمز</label>
+          <button type="button" class="pw-eye" data-eye="r-pass2" aria-label="نمایش رمز">👁</button><div class="err"></div></div>
+        <label class="check"><input type="checkbox" id="r-terms"><span>قوانین کلوپ و <a href="#pricing">شرایط اشتراک</a> را می‌پذیرم.</span></label>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">عضویت 🚀</button>
+        <p class="auth-foot">قبلاً عضو شده‌ای؟ <button type="button" data-view="login">وارد شو</button></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9 · DASHBOARD ================= -->
+<section class="view" id="view-dashboard">
+  <div class="dash-top dsec" style="--d:.05s" id="dash-head"></div>
+  <div class="dash-kpis dsec" style="--d:.15s" id="dash-kpis"></div>
+  <div class="dash-grid">
+    <div class="panel dsec" style="--d:.28s" id="p-chart"></div>
+    <div class="panel p-gauges dsec" style="--d:.36s" id="p-gauges"></div>
+  </div>
+  <div class="dash-grid">
+    <div class="panel p-projects dsec" style="--d:.46s" id="p-projects"></div>
+    <div class="panel dsec" style="--d:.54s" id="p-timeline"></div>
+  </div>
+  <div class="gates dsec" style="--d:.64s" id="dash-gates"></div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="f-giant" aria-hidden="true">DUN</div>
+  <div class="f-grid">
+    <div class="f-about">
+      <a class="brand" href="#home" data-view="home"><span class="brand-mark"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="5.5" ry="8" transform="rotate(24 12 12)"/><path d="M9.5 5.5c3 4 3 9 1 13"/></svg></span><span>DUN</span></a>
+      <p>دُن — رُستری قهوهٔ تخصصی، کافهٔ شبانه و کلوپ شب‌بیداران. هر سه‌شنبه تازه رُست می‌شود.</p>
+      <div class="f-social">
+        <button aria-label="اینستاگرام"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.5"/><path d="M17.5 6.5h.01"/></svg></button>
+        <button aria-label="تلگرام"><svg viewBox="0 0 24 24"><path d="m22 3-9.5 18-2.5-8L2 10.5 22 3Z"/></svg></button>
+        <button aria-label="واتساپ"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 9.5c0 4 2 6 5.5 6.5.8-.2 1.5-1.5.8-2.2l-1.6-.8-1 1c-1.5-.7-2.2-1.4-2.7-2.9l1-.9-.8-1.6c-.7-.7-1.2 0-1.2.9Z"/></svg></button>
+        <button aria-label="درباره ما" data-view="about"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11 12h1v4h1"/></svg></button>
+      </div>
+    </div>
+    <div><h4>کافه</h4><ul><li><button data-view="works">دانه‌ها</button></li><li><button data-view="pricing">اشتراک</button></li><li><button data-view="features">مسیر دانه</button></li><li><button data-view="dashboard">پنل کلوپ</button></li></ul></div>
+    <div><h4>ما</h4><ul><li><button data-view="about">دربارهٔ دُن</button></li><li><button data-view="contact">رزرو و تماس</button></li><li><button data-view="register">عضویت کلوپ</button></li><li><button data-cmd>جستجوی فرمان</button></li></ul></div>
+    <div><h4>خبرنامهٔ سه‌شنبه‌ها</h4><p style="font-size:13.5px;color:var(--ink2);margin-bottom:14px">هر هفته: دانهٔ تازه، recipe و جای خالی کارگاه.</p>
+      <div style="display:flex;gap:8px"><div class="field" style="flex:1;margin:0"><input id="nl-email" placeholder=" " dir="ltr" style="padding:14px 14px 6px"><label for="nl-email" style="top:11px">ایمیل</label></div><button class="btn btn-primary" data-newsletter>عضویت</button></div>
+    </div>
+  </div>
+  <div class="f-bottom"><span>© <span id="year">۱۴۰۳</span> DUN ROASTERY — تازه‌رُست، با عشق.</span><span>ساخته‌شده با ☕ و کافئین در تهران</span></div>
+</footer>
+
+<div id="progress" style="position:fixed;top:0;inset-inline-start:0;width:100%;height:2px;z-index:700;transform-origin:right;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));transform:scaleX(0)"></div>
+<div id="dock"></div>
+
+<div class="modal" id="modal"><div class="modal-card"></div></div>
+
+<div class="cmd-overlay" id="cmd">
+  <div class="cmd-box">
+    <input id="cmd-input" placeholder="چه چیزی دم می‌کنی؟…" aria-label="جستجوی فرمان">
+    <div class="cmd-list" id="cmd-list"></div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+</div><!-- /#app -->
+
+<script src="js/app.core.js"></script>
+<script src="js/app.views.js"></script>
+</body>
+</html>
